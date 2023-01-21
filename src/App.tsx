@@ -1,5 +1,5 @@
 import PrivateRoute from "./auth/PrivateRoute";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { Login } from "./components/Login";
 import { Quiz } from "./components/Quiz";
 import { GlobalContext } from "./utils/GlobalContext";
@@ -13,10 +13,17 @@ function App() {
     return (
         <GlobalContext.Provider value={{ userData, setUserData, questions, setQuestions }}>
             <BrowserRouter>
-                <Switch>
-                    <PrivateRoute exact path="/" component={Quiz} />
-                    <Route exact path="/login" component={Login} />
-                </Switch>
+                <Routes>
+                    <Route
+                        path="/"
+                        element={
+                            <PrivateRoute>
+                                <Quiz />
+                            </PrivateRoute>
+                        }
+                    />
+                    <Route path="/login" element={<Login />} />
+                </Routes>
             </BrowserRouter>
         </GlobalContext.Provider>
     );

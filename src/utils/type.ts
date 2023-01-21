@@ -1,6 +1,7 @@
 export type TUserData = {
     name: string;
     email: string;
+    deadline: Date;
 };
 
 export type TGlobalState = {

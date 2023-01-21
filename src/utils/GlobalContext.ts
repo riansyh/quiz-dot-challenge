@@ -5,6 +5,7 @@ export const GlobalContext = createContext<TGlobalState>({
     userData: {
         name: "",
         email: "",
+        deadline: new Date(),
     },
     questions: [],
     setUserData: () => {},

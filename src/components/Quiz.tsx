@@ -1,17 +1,16 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useGlobalContext } from "../utils/GlobalContext";
-import parse from "html-react-parser";
-import clsx from "clsx";
-import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { useCountdown } from "../utils/useCountdown";
 import { Questions } from "./Questions";
+import { useNavigate } from "react-router-dom";
 
 export const Quiz = () => {
-    const { questions } = useGlobalContext();
+    const { userData, setUserData, questions, setQuestions } = useGlobalContext();
     const deadline = localStorage.getItem("deadline");
     const [, , minutes, seconds] = useCountdown(deadline!);
     const [isFinish, setIsFinish] = useState(false);
+
+    const navigate = useNavigate();
 
     const [result, setResult] = useState({
         correct: 0,
@@ -40,27 +39,51 @@ export const Quiz = () => {
                 incorrect: incorrect,
             }));
         }
+
+        if (isFinish) {
+            localStorage.removeItem("questions");
+            localStorage.removeItem("auth");
+        }
     }, [isFinish]);
+
+    useEffect(() => {
+        const user = localStorage.getItem("userData");
+        if (user) {
+            setUserData(JSON.parse(user));
+        }
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem("auth");
+        localStorage.removeItem("deadline");
+        setQuestions([]);
+        navigate("/login");
+    };
 
     return (
         <main className="bg-slate-100 text-gray-900 font-sans h-screen w-full">
             <section className="flex items-center h-screen w-full">
                 {minutes + seconds <= 0 || isFinish ? (
                     <div className="w-full flex flex-col items-center justify-center min-h-[500px] md:min-h-[320px] bg-white rounded-lg shadow-lg p-8 m-4 md:max-w-screen-md md:mx-auto gap-12">
-                        <h1 className="text-3xl text-gray-800 font-semibold">
-                            Your quiz is ended thanks!
-                        </h1>
+                        <div className="flex w-full flex-col text-center">
+                            <h1 className="text-3xl text-gray-800 font-semibold">
+                                Hey {userData?.name?.split(" ")[0]}, your quiz is ended thanks!
+                            </h1>
+                            <p className="text-sm text-gray-500">
+                                If you refresh this page, you will log out automatically.
+                            </p>
+                        </div>
                         <div className="flex justify-between items-end w-full px-12">
                             <div className="flex flex-col gap-2 items-center">
                                 <h2 className="text-slate-700 w-[100px] text-center">Correct</h2>
                                 <p className="font-bold text-3xl text-green-600">
-                                    {result.correct}
+                                    {result?.correct}
                                 </p>
                             </div>
                             <div className="flex flex-col gap-2 items-center">
                                 <h2 className="text-slate-700 w-[100px] text-center">Incorrect</h2>
                                 <p className="font-bold text-3xl text-red-600">
-                                    {result.incorrect}
+                                    {result?.incorrect}
                                 </p>
                             </div>
                             <div className="flex flex-col gap-2 items-center">
@@ -72,8 +95,10 @@ export const Quiz = () => {
                         </div>
 
                         <div className="flex gap-2">
-                            <button className="button bg-blue-600 text-white">Try Again</button>
-                            <button className="button border-2 border-blue-600 text-blue-600">
+                            <button
+                                onClick={handleLogout}
+                                className="button bg-blue-600 hover:bg-blue-700 text-white"
+                            >
                                 Logout
                             </button>
                         </div>

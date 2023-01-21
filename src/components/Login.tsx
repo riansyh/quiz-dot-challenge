@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useForm, Resolver } from "react-hook-form";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../utils/GlobalContext";
 import { TFormValues } from "../utils/type";
 
@@ -46,16 +46,19 @@ export const Login = () => {
 
     const onSubmit = handleSubmit((data) => {
         const oldDate = new Date();
-        const deadlineDate = new Date(oldDate.getTime() + 10 * 60000);
+        const deadlineDate = new Date(oldDate.getTime() + 5 * 60000); //set deadline 5 minute
+
+        const user = {
+            name: data.name,
+            email: data.email,
+            deadline: deadlineDate,
+        };
 
         localStorage.setItem("auth", "1hAhkjdf93hASAsajhcW123");
         localStorage.setItem("deadline", deadlineDate.toISOString());
+        localStorage.setItem("userData", JSON.stringify(user));
 
-        setUserData({
-            name: data.name,
-            email: data.email,
-            deadline: new Date(oldDate.getTime() + 10 * 60000), //set deadline 10 minute
-        });
+        setUserData(user);
 
         navigate("/");
     });

@@ -53,6 +53,10 @@ export const Quiz = () => {
         }
     }, []);
 
+    useEffect(() => {
+        if (minutes + seconds <= 0) setIsFinish(true);
+    }, [minutes, seconds]);
+
     const handleLogout = () => {
         localStorage.clear();
         setQuestions([]);

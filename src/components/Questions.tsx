@@ -5,6 +5,7 @@ import { useGlobalContext } from "../utils/GlobalContext";
 import parse from "html-react-parser";
 import axios from "axios";
 import { Loading } from "./Loading";
+import Swal from "sweetalert2";
 
 export const Questions = ({
     minutes,
@@ -152,7 +153,19 @@ export const Questions = ({
 
                     {activeQuestionIndex === 9 && (
                         <button
-                            onClick={setFinish}
+                            onClick={() => {
+                                Swal.fire({
+                                    title: "Are you sure?",
+                                    text: "If you finish the quiz you will ended all the quiz and get your result directly",
+                                    showCancelButton: true,
+                                    confirmButtonText: "Yes, finish the quiz",
+                                    confirmButtonColor: "#3B82f6",
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        setFinish();
+                                    }
+                                });
+                            }}
                             className="absolute right-0 button text-white px-6 bg-green-500 hover:bg-green-600"
                         >
                             Finish

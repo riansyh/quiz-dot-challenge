@@ -67,13 +67,13 @@ export const Quiz = () => {
                     <div className="w-full flex flex-col items-center justify-center min-h-[500px] md:min-h-[320px] bg-white rounded-lg shadow-lg p-8 m-4 md:max-w-screen-md md:mx-auto gap-12">
                         <div className="flex w-full flex-col text-center">
                             <h1 className="text-3xl text-gray-800 font-semibold">
-                                Hey {userData?.name?.split(" ")[0]}, your quiz is ended thanks!
+                                Hey {userData?.name?.split(" ")[0]}, thank you for taking the quiz!
                             </h1>
                             <p className="text-sm text-gray-500">
                                 If you refresh this page, you will log out automatically.
                             </p>
                         </div>
-                        <div className="flex justify-between items-end w-full px-12">
+                        <div className="flex flex-col sm:flex-row justify-between gap-4 sm:items-end w-full px-12">
                             <div className="flex flex-col gap-2 items-center">
                                 <h2 className="text-slate-700 w-[100px] text-center">Correct</h2>
                                 <p className="font-bold text-3xl text-green-600">

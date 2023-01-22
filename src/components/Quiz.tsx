@@ -54,8 +54,7 @@ export const Quiz = () => {
     }, []);
 
     const handleLogout = () => {
-        localStorage.removeItem("auth");
-        localStorage.removeItem("deadline");
+        localStorage.clear();
         setQuestions([]);
         navigate("/login");
     };

@@ -6,7 +6,7 @@ This project is a submission to apply for an internship as a Frontend React.js i
 
 ## Tech Stack
 
-Vite, React, Typescript, TailwindCSS, Local Storage
+Vite, React, Typescript, TailwindCSS, React Router DOM v6, Local Storage
 
 
 ## Features

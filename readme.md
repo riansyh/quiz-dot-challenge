@@ -12,7 +12,7 @@ Vite, React, Typescript, TailwindCSS, Local Storage
 ## Features
 
 - Login features
-- 10 random true or fale questions from [Open TDB](https://opentdb.com/)
+- 10 random true or false questions from [Open TDB](https://opentdb.com/)
 - Resumable quiz when refresh or close the browser
 
 
